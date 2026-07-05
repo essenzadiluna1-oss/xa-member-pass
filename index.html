@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>XA Member Pass — Cliente</title>
+
+  <style>
+    :root {
+      --bg: #140305;
+      --cream: #fff4df;
+      --ivory: #fffaf0;
+      --gold: #d5a443;
+      --gold2: #f5d57e;
+      --gold3: #8e611c;
+      --bord: #5b101b;
+      --bord2: #851d2d;
+      --bord3: #31060b;
+      --ink: #2b1110;
+      --muted: #785f4c;
+      --green: #397349;
+      --red: #9e2537;
+      --panel: rgba(255,246,226,.96);
+      --soft: 0 12px 30px rgba(0,0,0,.25);
+      --deep: 0 18px 55px rgba(0,0,0,.42);
+      --line2: rgba(255,244,223,.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at top left, rgba(245,213,126,.22), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(133,29,45,.38), transparent 44%),
+        linear-gradient(145deg, var(--bg), #070102 78%);
+      color: var(--cream);
+      font-family: Georgia, "Times New Roman", serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      padding-bottom: 94px;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      touch-action: manipulation;
+      font-family: inherit;
+    }
+
+    .app {
+      width: min(760px, 100%);
+      margin: 0 auto;
+      padding: 10px;
+    }
+
+    .top {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      margin: 0 -10px 12px;
+      padding: 8px 10px 10px;
+      background:
+        linear-gradient(180deg, rgba(20,3,5,.98), rgba(20,3,5,.90)),
+        radial-gradient(circle at top center, rgba(245,213,126,.15), transparent 55%);
+      border-bottom: 1px solid var(--line2);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 12px 30px rgba(0,0,0,.28);
+    }
+
+    .top-card {
+      border-radius: 22px;
+      padding: 11px;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(245,213,126,.32), transparent 34%),
+        linear-gradient(145deg, #fff4df, #dec397);
+      color: var(--ink);
+      border: 1px solid rgba(255,244,223,.66);
+      box-shadow: var(--deep);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .top-card::after {
+      content: "XA";
+      position: absolute;
+      right: -12px;
+      bottom: -31px;
+      font-size: 92px;
+      line-height: 1;
+      font-weight: 950;
+      letter-spacing: -8px;
+      color: rgba(91,16,27,.065);
+      pointer-events: none;
+    }
+
+    .brand-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .seal {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 28% 18%, rgba(255,255,255,.25), transparent 27%),
+        linear-gradient(145deg, #8a1d2e, #410910);
+      color: var(--cream);
+      border: 1px solid rgba(245,213,126,.62);
+      box-shadow: inset 0 0 0 2px rgba(255,244,223,.08), 0 8px 20px rgba(0,0,0,.25);
+      font-size: 23px;
+      font-weight: 950;
+      letter-spacing: -2px;
+    }
+
+    .brand small {
+      display: block;
+      margin: 0 0 3px;
+      color: var(--bord2);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 10px;
+      font-weight: 950;
+      letter-spacing: 1.7px;
+      text-transform: uppercase;
+    }
+
+    .brand h1 {
+      margin: 0;
+      color: var(--bord);
+      font-size: 29px;
+      line-height: .96;
+      letter-spacing: -1.6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .top-copy {
+      position: relative;
+      z-index: 1;
+      margin: 10px 0 0;
+      color: #70402f;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      line-height: 1.32;
+    }
+
+    .top-copy strong {
+      color: var(--bord);
+    }
+
+    .hero {
+      border-radius: 26px;
+      padding: 18px;
+      background:
+        radial-gradient(circle at top left, rgba(245,213,126,.12), transparent 36%),
+        linear-gradient(145deg, rgba(91,16,27,.82), rgba(28,3,8,.92));
+      border: 1px solid rgba(245,213,126,.22);
+      box-shadow: var(--deep);
+    }
+
+    .hero h2 {
+      margin: 0 0 9px;
+      color: var(--gold2);
+      font-size: clamp(35px, 11vw, 58px);
+      line-height: .94;
+      letter-spacing: -1.8px;
+    }
+
+    .hero p {
+      margin: 0;
+      color: rgba(255,244,223,.86);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 15px;
+      line-height: 1.42;
+    }
+
+    .member-card {
+      margin-top: 14px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      padding: 20px;
+      min-height: 300px;
+      background:
+        radial-gradient(circle at 16% 12%, rgba(255,255,255,.17), transparent 27%),
+        radial-gradient(circle at 95% 100%, rgba(245,213,126,.22), transparent 38%),
+        linear-gradient(145deg, #751827, #2b060c 72%);
+      border: 1px solid rgba(245,213,126,.62);
+      box-shadow: var(--deep);
+      color: var(--cream);
+    }
+
+    .member-card::before {
+      content: "";
+      position: absolute;
+      inset: 11px;
+      border: 1px solid rgba(245,213,126,.28);
+      border-radius: 21px;
+      pointer-events: none;
+    }
+
+    .member-card::after {
+      content: "XA";
+      position: absolute;
+      right: -9px;
+      bottom: -30px;
+      font-size: 118px;
+      line-height: 1;
+      letter-spacing: -9px;
+      font-weight: 950;
+      color: rgba(245,213,126,.10);
+      pointer-events: none;
+    }
+
+    .member-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .member-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .chip {
+      width: 46px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(145deg, #f8dc92, #9d681e);
+      border: 1px solid rgba(255,244,223,.28);
+      box-shadow: inset 0 0 0 4px rgba(91,16,27,.09);
+    }
+
+    .level {
+      display: inline-flex;
+      max-width: 65%;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(255,244,223,.10);
+      color: var(--gold2);
+      border: 1px solid rgba(245,213,126,.30);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .member-name {
+      margin-top: 26px;
+    }
+
+    .member-name small {
+      display: block;
+      color: rgba(255,244,223,.60);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    .member-name h3 {
+      margin: 5px 0 0;
+      color: var(--cream);
+      font-size: clamp(34px, 10vw, 52px);
+      line-height: .92;
+      letter-spacing: -1.9px;
+    }
+
+    .member-bottom {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 15px;
+      align-items: end;
+      margin-top: 24px;
+    }
+
+    .points small {
+      display: block;
+      color: rgba(255,244,223,.60);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .points strong {
+      display: block;
+      color: var(--gold2);
+      font-size: 56px;
+      line-height: .86;
+      letter-spacing: -2.2px;
+    }
+
+    .member-code {
+      text-align: right;
+      color: rgba(255,244,223,.75);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 11px;
+      font-weight: 850;
+      word-break: break-word;
+    }
+
+    .qr {
+      display: grid;
+      place-items: center;
+      width: 118px;
+      height: 118px;
+      border-radius: 18px;
+      background: var(--ivory);
+      border: 1px solid rgba(213,164,67,.45);
+      box-shadow: var(--soft);
+      overflow: hidden;
+    }
+
+    .qr svg {
+      width: 102px;
+      height: 102px;
+      display: block;
+    }
+
+    .progress-box {
+      margin-top: 18px;
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,244,223,.08);
+      border: 1px solid rgba(245,213,126,.20);
+    }
+
+    .progress-copy {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: rgba(255,244,223,.80);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .bar {
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.30);
+      border: 1px solid rgba(255,244,223,.09);
+      overflow: hidden;
+    }
+
+    .fill {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--gold3), var(--gold2));
+    }
+
+    .panel {
+      margin-top: 14px;
+      border-radius: 22px;
+      padding: 16px;
+      background: var(--panel);
+      color: var(--ink);
+      border: 1px solid rgba(255,244,223,.58);
+      box-shadow: var(--soft);
+      overflow: hidden;
+    }
+
+    .panel-title {
+      margin-bottom: 12px;
+    }
+
+    .panel-title small {
+      display: block;
+      color: var(--muted);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+    }
+
+    .panel-title h4 {
+      margin: 3px 0 0;
+      color: var(--bord);
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .reward-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .reward {
+      border-radius: 19px;
+      padding: 14px;
+      background: linear-gradient(145deg, rgba(255,250,240,.98), rgba(238,212,166,.94));
+      border: 1px solid rgba(213,164,67,.30);
+      color: var(--ink);
+      box-shadow: 0 8px 20px rgba(0,0,0,.12);
+    }
+
+    .reward-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .reward-head strong {
+      color: var(--bord);
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .badge {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(91,16,27,.10);
+      border: 1px solid rgba(91,16,27,.15);
+      color: var(--bord);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 11px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      white-space: nowrap;
+    }
+
+    .badge.ok {
+      background: rgba(57,115,73,.13);
+      color: var(--green);
+      border-color: rgba(57,115,73,.22);
+    }
+
+    .reward h5 {
+      margin: 0;
+      color: var(--bord);
+      font-size: 20px;
+      line-height: 1.05;
+    }
+
+    .reward p {
+      margin: 7px 0 0;
+      color: #67483a;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .history-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .history-item {
+      padding: 13px;
+      border-radius: 17px;
+      background: rgba(91,16,27,.07);
+      border: 1px solid rgba(91,16,27,.12);
+    }
+
+    .history-item h5 {
+      margin: 0;
+      color: var(--bord);
+      font-size: 17px;
+      line-height: 1.1;
+    }
+
+    .history-item p {
+      margin: 6px 0 0;
+      color: #67483a;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .notice {
+      padding: 13px;
+      border-radius: 18px;
+      background: rgba(245,213,126,.22);
+      border: 1px solid rgba(213,164,67,.34);
+      color: #4e2c1f;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      font-weight: 750;
+      line-height: 1.35;
+    }
+
+    .btn, .btn-gold, .btn-light {
+      min-height: 50px;
+      border-radius: 17px;
+      padding: 12px 14px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      font-weight: 950;
+      box-shadow: var(--soft);
+    }
+
+    .btn {
+      background: linear-gradient(145deg, var(--bord2), var(--bord3));
+      color: var(--cream);
+      border: 1px solid rgba(255,244,223,.18);
+    }
+
+    .btn-gold {
+      background: linear-gradient(145deg, var(--gold2), var(--gold));
+      color: #37120d;
+      border: 1px solid rgba(91,16,27,.12);
+    }
+
+    .btn-light {
+      background: linear-gradient(145deg, #fff7e5, #d9c6ae);
+      color: var(--bord);
+      border: 1px solid rgba(245,213,126,.35);
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .bottom {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 60;
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+      background: linear-gradient(0deg, rgba(7,1,2,.98), rgba(20,3,5,.86));
+      border-top: 1px solid var(--line2);
+      backdrop-filter: blur(14px);
+    }
+
+    .bottom-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      width: min(680px, 100%);
+      margin: 0 auto;
+    }
+
+    .bottom-inner button {
+      min-height: 52px;
+      border-radius: 18px;
+      font-size: 12px;
+      padding-left: 7px;
+      padding-right: 7px;
+    }
+
+    .empty {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(91,16,27,.07);
+      border: 1px dashed rgba(91,16,27,.20);
+      color: #67483a;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.4;
+    }
+
+    .version {
+      margin: 24px 0 10px;
+      text-align: center;
+      color: rgba(255,244,223,.46);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    @media(max-width: 560px) {
+      .brand h1 {
+        font-size: 28px;
+      }
+
+      .member-bottom {
+        grid-template-columns: 1fr;
+      }
+
+      .member-code {
+        text-align: left;
+      }
+
+      .qr {
+        width: 112px;
+        height: 112px;
+      }
+
+      .qr svg {
+        width: 98px;
+        height: 98px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <header class="top">
+      <div class="top-card">
+        <div class="brand-row">
+          <div class="seal">XA</div>
+          <div class="brand">
+            <small>Fermented Redrinks</small>
+            <h1>XA Member Pass</h1>
+          </div>
+        </div>
+
+        <p class="top-copy">
+          La tua card personale XA. Mostrala in negozio per accumulare punti e riscattare premi.
+          <strong>Not a drink. An experience.</strong>
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h2>Member Pass</h2>
+        <p>
+          Benvenuto nel club XA: punti, privilegi, anteprime e premi riservati ai membri.
+        </p>
+      </section>
+
+      <section id="cardBox"></section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <small>Prossimo privilegio</small>
+          <h4 id="nextRewardTitle">Secret Bottle Preview</h4>
+        </div>
+        <div class="notice" id="nextRewardText">
+          Calcolo del prossimo premio...
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <small>Premi disponibili</small>
+          <h4>Rewards Club</h4>
+        </div>
+        <div class="reward-grid" id="rewardGrid"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <small>Storico personale</small>
+          <h4>Movimenti recenti</h4>
+        </div>
+        <div class="history-list" id="historyList"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <small>Come aggiornare</small>
+          <h4>Pass cliente</h4>
+        </div>
+        <div class="notice">
+          Questo pass demo si aggiorna tramite link generato dal negozio. In futuro sarà collegato a database online.
+        </div>
+      </section>
+    </main>
+
+    <div class="version">V1 — XA Member Pass Cliente</div>
+  </div>
+
+  <div class="bottom">
+    <div class="bottom-inner">
+      <button class="btn-gold" onclick="scrollToCard()">Card</button>
+      <button class="btn-light" onclick="scrollToRewards()">Premi</button>
+      <button class="btn" onclick="savePass()">Salva</button>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "xa_member_pass_client_v1";
+
+    const defaultRewards = [
+      {
+        title: "Secret Bottle Preview",
+        points: 250,
+        desc: "Anteprima riservata di una bottiglia o micro lotto XA."
+      },
+      {
+        title: "Private Fermentation Tasting",
+        points: 350,
+        desc: "Degustazione privata dedicata ai fermentati XA."
+      },
+      {
+        title: "Limited Batch Reservation",
+        points: 500,
+        desc: "Riserva prioritaria su una selezione limitata."
+      },
+      {
+        title: "XA Cellar Access",
+        points: 650,
+        desc: "Accesso speciale ad assaggi, prove e note di cantina XA."
+      },
+      {
+        title: "Founder’s Table",
+        points: 800,
+        desc: "Tavolo premium con degustazione guidata."
+      },
+      {
+        title: "Ambassador Experience",
+        points: 1000,
+        desc: "Esperienza simbolica da Ambassador XA."
+      }
+    ];
+
+    let pass = {
+      id: "XA-DEMO-0001",
+      name: "Cliente XA",
+      level: "Private Member",
+      points: 320,
+      favorite: "Fermented Redrinks",
+      updatedAt: new Date().toISOString(),
+      history: [
+        {
+          title: "Benvenuto nel Club XA",
+          date: new Date().toISOString(),
+          text: "+50 punti di ingresso"
+        },
+        {
+          title: "Acquisto demo",
+          date: new Date().toISOString(),
+          text: "+270 punti"
+        }
+      ]
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function readParams() {
+      const params = new URLSearchParams(window.location.search);
+
+      const hasData =
+        params.has("name") ||
+        params.has("points") ||
+        params.has("level") ||
+        params.has("id");
+
+      if (!hasData) return null;
+
+      return {
+        id: params.get("id") || "XA-" + Date.now().toString(36).toUpperCase(),
+        name: params.get("name") || "Cliente XA",
+        level: params.get("level") || "Private Member",
+        points: Number(params.get("points") || 0),
+        favorite: params.get("favorite") || "XA Fermented Redrinks",
+        updatedAt: new Date().toISOString(),
+        history: [
+          {
+            title: "Pass aggiornato dal negozio",
+            date: new Date().toISOString(),
+            text: "Saldo attuale: " + Number(params.get("points") || 0) + " punti"
+          }
+        ]
+      };
+    }
+
+    function loadPass() {
+      const fromUrl = readParams();
+
+      if (fromUrl) {
+        pass = fromUrl;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(pass));
+        return;
+      }
+
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(pass));
+        return;
+      }
+
+      try {
+        pass = JSON.parse(raw);
+      } catch (err) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(pass));
+      }
+    }
+
+    function savePass() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(pass));
+      alert("Pass salvato su questo telefono.");
+    }
+
+    function buildQr() {
+      const size = 15;
+      let hash = 0;
+      const text = pass.id + pass.name;
+
+      for (let i = 0; i < text.length; i++) {
+        hash = ((hash << 5) - hash + text.charCodeAt(i)) | 0;
+      }
+
+      function finder(x, y) {
+        const zones = [[0,0], [10,0], [0,10]];
+        for (const [zx, zy] of zones) {
+          if (x >= zx && x <= zx + 4 && y >= zy && y <= zy + 4) {
+            const bx = x - zx;
+            const by = y - zy;
+            if (bx === 0 || bx === 4 || by === 0 || by === 4) return true;
+            if (bx === 2 && by === 2) return true;
+            return false;
+          }
+        }
+        return null;
+      }
+
+      let rects = "";
+
+      for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+          const f = finder(x, y);
+          let fill = false;
+
+          if (f !== null) {
+            fill = f;
+          } else {
+            const v = Math.abs(Math.sin((x + 1) * 17.13 + (y + 1) * 9.91 + hash) * 10000);
+            fill = Math.floor(v) % 3 === 0 || ((x * y + hash) % 11 === 0);
+          }
+
+          if (fill) {
+            rects += '<rect x="' + x + '" y="' + y + '" width="1" height="1" rx=".12" />';
+          }
+        }
+      }
+
+      return `
+        <svg viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
+          <rect width="15" height="15" fill="#fffaf0"/>
+          <g fill="#4b1018">${rects}</g>
+        </svg>
+      `;
+    }
+
+    function nextRewardInfo() {
+      const sorted = [...defaultRewards].sort((a, b) => a.points - b.points);
+      const points = Number(pass.points || 0);
+      const next = sorted.find(r => r.points > points) || sorted[sorted.length - 1];
+      const previous = [...sorted].reverse().find(r => r.points <= points);
+      const base = previous && previous.points !== next.points ? previous.points : 0;
+      const span = Math.max(1, next.points - base);
+      const progress = Math.min(100, Math.max(0, ((points - base) / span) * 100));
+      const missing = Math.max(0, next.points - points);
+
+      return {
+        next,
+        progress,
+        missing
+      };
+    }
+
+    function renderCard() {
+      const info = nextRewardInfo();
+
+      const label = info.missing > 0
+        ? "Mancano " + info.missing + " punti per " + info.next.title
+        : "Premio raggiunto: " + info.next.title;
+
+      document.getElementById("cardBox").innerHTML = `
+        <div class="member-card" id="memberCard">
+          <div class="member-top">
+            <div class="chip"></div>
+            <div class="level">${escapeHtml(pass.level)}</div>
+          </div>
+
+          <div class="member-name">
+            <small>XA Member Club</small>
+            <h3>${escapeHtml(pass.name)}</h3>
+          </div>
+
+          <div class="member-bottom">
+            <div class="points">
+              <small>Saldo punti</small>
+              <strong>${Number(pass.points || 0)}</strong>
+            </div>
+
+            <div class="member-code">
+              <div class="qr">${buildQr()}</div>
+              <div style="margin-top:7px;">${escapeHtml(pass.id)}</div>
+            </div>
+          </div>
+
+          <div class="progress-box">
+            <div class="progress-copy">
+              <span>${escapeHtml(label)}</span>
+              <span>${Math.round(info.progress)}%</span>
+            </div>
+            <div class="bar">
+              <div class="fill" style="width:${info.progress}%"></div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderNextReward() {
+      const info = nextRewardInfo();
+
+      document.getElementById("nextRewardTitle").textContent = info.next.title;
+
+      document.getElementById("nextRewardText").innerHTML = info.missing > 0
+        ? `Ti mancano <b>${info.missing} punti</b> per ottenere <b>${escapeHtml(info.next.title)}</b>.`
+        : `Hai già raggiunto <b>${escapeHtml(info.next.title)}</b>. Mostra la card in negozio.`;
+    }
+
+    function renderRewards() {
+      const points = Number(pass.points || 0);
+
+      document.getElementById("rewardGrid").innerHTML = defaultRewards.map(r => {
+        const ok = points >= r.points;
+
+        return `
+          <div class="reward">
+            <div class="reward-head">
+              <strong>${r.points}</strong>
+              <span class="badge ${ok ? "ok" : ""}">${ok ? "Raggiunto" : "Premio"}</span>
+            </div>
+            <h5>${escapeHtml(r.title)}</h5>
+            <p>${escapeHtml(r.desc)}</p>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderHistory() {
+      const history = Array.isArray(pass.history) ? pass.history : [];
+
+      document.getElementById("historyList").innerHTML = history.length
+        ? history.map(item => `
+          <div class="history-item">
+            <h5>${escapeHtml(item.title)}</h5>
+            <p>${escapeHtml(item.text || "")}</p>
+          </div>
+        `).join("")
+        : `<div class="empty">Nessun movimento ancora disponibile.</div>`;
+    }
+
+    function scrollToCard() {
+      document.getElementById("memberCard")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    function scrollToRewards() {
+      document.getElementById("rewardGrid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function renderAll() {
+      renderCard();
+      renderNextReward();
+      renderRewards();
+      renderHistory();
+    }
+
+    loadPass();
+    renderAll();
+  </script>
+</body>
+</html>
