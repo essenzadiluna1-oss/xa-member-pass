@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>XA Member Pass — Cliente</title>
+  <title>XA Member Pass — V1.22</title>
 
   <style>
     :root {
@@ -126,6 +126,10 @@
       letter-spacing: -2px;
     }
 
+    .brand {
+      min-width: 0;
+    }
+
     .brand small {
       display: block;
       margin: 0 0 3px;
@@ -135,6 +139,9 @@
       font-weight: 950;
       letter-spacing: 1.7px;
       text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .brand h1 {
@@ -163,8 +170,8 @@
     }
 
     .hero {
-      border-radius: 26px;
-      padding: 18px;
+      border-radius: 24px;
+      padding: 16px;
       background:
         radial-gradient(circle at top left, rgba(245,213,126,.12), transparent 36%),
         linear-gradient(145deg, rgba(91,16,27,.82), rgba(28,3,8,.92));
@@ -173,9 +180,9 @@
     }
 
     .hero h2 {
-      margin: 0 0 9px;
+      margin: 0 0 8px;
       color: var(--gold2);
-      font-size: clamp(35px, 11vw, 58px);
+      font-size: clamp(34px, 10vw, 54px);
       line-height: .94;
       letter-spacing: -1.8px;
     }
@@ -193,8 +200,8 @@
       position: relative;
       overflow: hidden;
       border-radius: 28px;
-      padding: 20px;
-      min-height: 300px;
+      padding: 17px;
+      min-height: 250px;
       background:
         radial-gradient(circle at 16% 12%, rgba(255,255,255,.17), transparent 27%),
         radial-gradient(circle at 95% 100%, rgba(245,213,126,.22), transparent 38%),
@@ -207,7 +214,7 @@
     .member-card::before {
       content: "";
       position: absolute;
-      inset: 11px;
+      inset: 10px;
       border: 1px solid rgba(245,213,126,.28);
       border-radius: 21px;
       pointer-events: none;
@@ -218,7 +225,7 @@
       position: absolute;
       right: -9px;
       bottom: -30px;
-      font-size: 118px;
+      font-size: 112px;
       line-height: 1;
       letter-spacing: -9px;
       font-weight: 950;
@@ -239,8 +246,8 @@
     }
 
     .chip {
-      width: 46px;
-      height: 34px;
+      width: 44px;
+      height: 32px;
       border-radius: 10px;
       background: linear-gradient(145deg, #f8dc92, #9d681e);
       border: 1px solid rgba(255,244,223,.28);
@@ -249,7 +256,7 @@
 
     .level {
       display: inline-flex;
-      max-width: 65%;
+      max-width: 68%;
       padding: 8px 11px;
       border-radius: 999px;
       background: rgba(255,244,223,.10);
@@ -266,7 +273,7 @@
     }
 
     .member-name {
-      margin-top: 26px;
+      margin-top: 20px;
     }
 
     .member-name small {
@@ -280,19 +287,19 @@
     }
 
     .member-name h3 {
-      margin: 5px 0 0;
+      margin: 4px 0 0;
       color: var(--cream);
-      font-size: clamp(34px, 10vw, 52px);
+      font-size: clamp(32px, 9vw, 48px);
       line-height: .92;
-      letter-spacing: -1.9px;
+      letter-spacing: -1.8px;
     }
 
     .member-bottom {
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 15px;
+      gap: 12px;
       align-items: end;
-      margin-top: 24px;
+      margin-top: 18px;
     }
 
     .points small {
@@ -308,16 +315,16 @@
     .points strong {
       display: block;
       color: var(--gold2);
-      font-size: 56px;
+      font-size: 52px;
       line-height: .86;
-      letter-spacing: -2.2px;
+      letter-spacing: -2px;
     }
 
     .member-code {
       text-align: right;
       color: rgba(255,244,223,.75);
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 850;
       word-break: break-word;
     }
@@ -325,9 +332,9 @@
     .qr {
       display: grid;
       place-items: center;
-      width: 118px;
-      height: 118px;
-      border-radius: 18px;
+      width: 104px;
+      height: 104px;
+      border-radius: 17px;
       background: var(--ivory);
       border: 1px solid rgba(213,164,67,.45);
       box-shadow: var(--soft);
@@ -335,14 +342,21 @@
     }
 
     .qr svg {
-      width: 102px;
-      height: 102px;
+      width: 91px;
+      height: 91px;
       display: block;
     }
 
+    .show-card-panel {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 9px;
+    }
+
     .progress-box {
-      margin-top: 18px;
-      padding: 12px;
+      margin-top: 14px;
+      padding: 11px;
       border-radius: 18px;
       background: rgba(255,244,223,.08);
       border: 1px solid rgba(245,213,126,.20);
@@ -509,6 +523,16 @@
       line-height: 1.35;
     }
 
+    .install-list {
+      margin: 0;
+      padding-left: 18px;
+      color: #4e2c1f;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      line-height: 1.45;
+      font-weight: 750;
+    }
+
     .btn, .btn-gold, .btn-light {
       min-height: 50px;
       border-radius: 17px;
@@ -593,27 +617,60 @@
       text-transform: uppercase;
     }
 
+    .full-card-mode .top,
+    .full-card-mode .hero,
+    .full-card-mode .panel,
+    .full-card-mode .version,
+    .full-card-mode .bottom {
+      display: none;
+    }
+
+    .full-card-mode body {
+      padding-bottom: 0;
+    }
+
+    .full-card-mode .app {
+      padding: 14px;
+    }
+
+    .full-card-mode .member-card {
+      min-height: calc(100vh - 28px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 0;
+    }
+
+    .full-card-mode .member-bottom {
+      grid-template-columns: 1fr;
+    }
+
+    .full-card-mode .member-code {
+      text-align: left;
+      margin-top: 8px;
+    }
+
+    .full-card-mode .qr {
+      width: 160px;
+      height: 160px;
+    }
+
+    .full-card-mode .qr svg {
+      width: 142px;
+      height: 142px;
+    }
+
     @media(max-width: 560px) {
       .brand h1 {
         font-size: 28px;
       }
 
-      .member-bottom {
-        grid-template-columns: 1fr;
+      .member-name h3 {
+        font-size: 41px;
       }
 
-      .member-code {
-        text-align: left;
-      }
-
-      .qr {
-        width: 112px;
-        height: 112px;
-      }
-
-      .qr svg {
-        width: 98px;
-        height: 98px;
+      .points strong {
+        font-size: 50px;
       }
     }
   </style>
@@ -642,11 +699,15 @@
       <section class="hero">
         <h2>Member Pass</h2>
         <p>
-          Benvenuto nel club XA: punti, privilegi, anteprime e premi riservati ai membri.
+          Punti, privilegi, anteprime e premi riservati ai membri XA.
         </p>
       </section>
 
       <section id="cardBox"></section>
+
+      <div class="show-card-panel">
+        <button class="btn-gold" onclick="showFullCard()">Mostra card in negozio</button>
+      </div>
 
       <section class="panel">
         <div class="panel-title">
@@ -676,16 +737,20 @@
 
       <section class="panel">
         <div class="panel-title">
-          <small>Come aggiornare</small>
-          <h4>Pass cliente</h4>
+          <small>Installa sul telefono</small>
+          <h4>Aggiungi alla schermata Home</h4>
         </div>
         <div class="notice">
-          Questo pass demo si aggiorna tramite link generato dal negozio. In futuro sarà collegato a database online.
+          <ol class="install-list">
+            <li>Apri questa pagina con Chrome.</li>
+            <li>Tocca i tre puntini in alto.</li>
+            <li>Scegli “Aggiungi a schermata Home”.</li>
+          </ol>
         </div>
       </section>
     </main>
 
-    <div class="version">V1 — XA Member Pass Cliente</div>
+    <div class="version">V1.22 — XA Member Pass Cliente</div>
   </div>
 
   <div class="bottom">
@@ -697,7 +762,7 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "xa_member_pass_client_v1";
+    const STORAGE_KEY = "xa_member_pass_client_v122";
 
     const defaultRewards = [
       {
@@ -709,6 +774,11 @@
         title: "Private Fermentation Tasting",
         points: 350,
         desc: "Degustazione privata dedicata ai fermentati XA."
+      },
+      {
+        title: "Bicchiere XA",
+        points: 450,
+        desc: "Bicchiere speciale XA, disponibile in negozio."
       },
       {
         title: "Limited Batch Reservation",
@@ -724,11 +794,6 @@
         title: "Founder’s Table",
         points: 800,
         desc: "Tavolo premium con degustazione guidata."
-      },
-      {
-        title: "Ambassador Experience",
-        points: 1000,
-        desc: "Esperienza simbolica da Ambassador XA."
       }
     ];
 
@@ -762,6 +827,14 @@
         .replaceAll("'", "&#039;");
     }
 
+    function safeDecode(value) {
+      try {
+        return decodeURIComponent(value || "");
+      } catch (err) {
+        return value || "";
+      }
+    }
+
     function readParams() {
       const params = new URLSearchParams(window.location.search);
 
@@ -769,22 +842,25 @@
         params.has("name") ||
         params.has("points") ||
         params.has("level") ||
-        params.has("id");
+        params.has("id") ||
+        params.has("favorite");
 
       if (!hasData) return null;
 
+      const points = Number(params.get("points") || 0);
+
       return {
         id: params.get("id") || "XA-" + Date.now().toString(36).toUpperCase(),
-        name: params.get("name") || "Cliente XA",
-        level: params.get("level") || "Private Member",
-        points: Number(params.get("points") || 0),
-        favorite: params.get("favorite") || "XA Fermented Redrinks",
+        name: safeDecode(params.get("name") || "Cliente XA"),
+        level: safeDecode(params.get("level") || "Private Member"),
+        points: points,
+        favorite: safeDecode(params.get("favorite") || "XA Fermented Redrinks"),
         updatedAt: new Date().toISOString(),
         history: [
           {
             title: "Pass aggiornato dal negozio",
             date: new Date().toISOString(),
-            text: "Saldo attuale: " + Number(params.get("points") || 0) + " punti"
+            text: "Saldo attuale: " + points + " punti"
           }
         ]
       };
@@ -878,11 +954,7 @@
       const progress = Math.min(100, Math.max(0, ((points - base) / span) * 100));
       const missing = Math.max(0, next.points - points);
 
-      return {
-        next,
-        progress,
-        missing
-      };
+      return { next, progress, missing };
     }
 
     function renderCard() {
@@ -977,6 +1049,14 @@
 
     function scrollToRewards() {
       document.getElementById("rewardGrid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function showFullCard() {
+      document.documentElement.classList.add("full-card-mode");
+      setTimeout(() => {
+        alert("Card a schermo intero. Tocca OK per tornare alla pagina.");
+        document.documentElement.classList.remove("full-card-mode");
+      }, 150);
     }
 
     function renderAll() {
